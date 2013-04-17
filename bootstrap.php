@@ -1,9 +1,8 @@
 <?php
 /**
  * Bootstrap WhyTheCharge loading
- * Does not use autoloader for increased compatibility
+ * Does not use autoloader for PHP 5.2 compatibility
  */
-
 class WhyTheCharge_Loader {
 	private $folder = "WhyTheCharge";
 	private $files = array(

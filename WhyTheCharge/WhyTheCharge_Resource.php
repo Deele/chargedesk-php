@@ -1,8 +1,8 @@
 <?php
 /**
- * WhyTheCharge Generic Error Handler
+ * WhyTheCharge Resource Holder
+ * Is extended by all resources to provide common functions
  */
-
 class WhyTheCharge_Resource {
 
 	/**
