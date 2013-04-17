@@ -1,21 +1,41 @@
 <?php
 /**
- * WhyTheCharge Simple PHP Library
+ * HTTP Request handler
+ * Makes API Request to WhyTheCharge
  */
-
 class WhyTheCharge_Request {
 
+	/**
+	 * Factory method, Make a HTTP request
+	 * @param $method HTTP request method ("post", "get" or "delete")
+	 * @param $path Relative request path
+	 * @param $params Payload to include in request
+	 * @return mixed Formatted object based on response from API
+	 */
 	public static function request($method, $path, $params) {
 		$request = new WhyTheCharge_Request();
 		return $request->requestRaw($method, $path, $params);
 	}
 
+	/**
+	 * Make a HTTP request
+	 * @param $method HTTP request method ("post", "get" or "delete")
+	 * @param $path Relative request path
+	 * @param $params Payload to include in request
+	 * @return mixed Formatted object based on response from API
+	 */
 	public function requestRaw($method, $path, $params) {
 		$url = WhyTheCharge::$apiUrl."/v".WhyTheCharge::$apiVersion."/$path";
 		list($curlInfo, $curlResponse) = $this->_curlRequest($method, $url, $params);
 		return $this->_parseResponse($curlInfo, $curlResponse);
 	}
 
+	/**
+	 * Parse response data from WhyTheCharge API
+	 * @param $curlInfo Payload from curl_info request containing information such as status codes
+	 * @param $curlResponse Raw response data
+	 * @return mixed Formatted object based on response from API
+	 */
 	private function _parseResponse($curlInfo, $curlResponse) {
 		$status_code = intval($curlInfo['http_code']);
 		$responseJSON = json_decode($curlResponse, false, 10);
@@ -25,7 +45,13 @@ class WhyTheCharge_Request {
 		return $responseJSON;
 	}
 
-
+	/**
+	 * Perform final HTTP request
+	 * @param $method HTTP request method ("post", "get" or "delete")
+	 * @param $url Absolute URL to make request
+	 * @param array $params Payload to send in request
+	 * @return array $curlInfo, $curlResponse Containing data from response
+	 */
 	private function _curlRequest($method, $url, $params = array()) {
 		$curlOptions = array();
 		$curlOptions[CURLOPT_URL] = $url;
@@ -61,10 +87,23 @@ class WhyTheCharge_Request {
 		return array($curlInfo, $curlResponse);
 	}
 
+	/**
+	 * Generate an error as a result of a curl failure
+	 * @param $code Curl error code
+	 * @param $error Curl Error message
+	 * @throws WhyTheCharge_ConnectError
+	 */
 	private function _curlError($code, $error) {
 		throw new WhyTheCharge_ConnectError("[code $code] $error");
 	}
 
+	/**
+	 * Generate an error as a result of a bad HTTP request
+	 * @param $status_code HTTP status code from response
+	 * @param $curlResponse Raw response data
+	 * @param $responseJSON Formatted response object
+	 * @throws WhyTheCharge_RequestError
+	 */
 	private function _apiError($status_code, $curlResponse, $responseJSON) {
 		$message = "There was an error talking to WhyTheCharge";
 		$incorrectParameter = false;
@@ -80,6 +119,12 @@ class WhyTheCharge_Request {
 		throw new WhyTheCharge_RequestError($message, $status_code, $curlResponse, $responseJSON, $incorrectParameter);
 	}
 
+	/**
+	 * Encode Payload parameters
+	 * @param $params Payload to encode
+	 * @param bool $array_name Name to prefix encoded parameters with
+	 * @return string Encoded payload parameters
+	 */
 	private function _encode($params, $array_name = false) {
 		if(!is_array($params)) {
 			return $params;
