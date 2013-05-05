@@ -5,20 +5,44 @@
 
 class WhyTheCharge_Product extends WhyTheCharge_Resource {
 
-	public static function create($data = array()) {
-		return self::_update(get_class(), false, $data);
+	/**
+	 * Creates a new Resource
+	 * @param array $data Fields to create a new charge with
+	 * @param string $api_key API key to use for this request
+	 * @return WhyTheCharge_Resource Created resource
+	 */
+	public static function create($data = array(), $api_key = null) {
+		return self::_update(get_class(), false, $data, $api_key);
 	}
 
-	public static function retrieve($key) {
-		return self::_find(get_class(), $key);
+	/**
+	 * Retrieves an existing Resource
+	 * @param $key Resource key to retrieve
+	 * @param string $api_key API key to use for this request
+	 * @return WhyTheCharge_Resource Resource matching the provided $key
+	 */
+	public static function retrieve($key, $api_key = null) {
+		return self::_find(get_class(), $key, $api_key);
 	}
 
-	public static function update($key, $data = array()) {
-		return self::_update(get_class(), $key, $data);
+	/**
+	 * @param $key Resource key to update
+	 * @param array $data Fields to update an existing resource with
+	 * @param string $api_key API key to use for this request
+	 * @return WhyTheCharge_Resource Resource with updated fields
+	 */
+	public static function update($key, $data = array(), $api_key = null) {
+		return self::_update(get_class(), $key, $data, $api_key);
 	}
 
-	public static function find($data = array()) {
-		return self::_find(get_class(), $data);
+	/**
+	 * Find one or more existing resources
+	 * @param array $data Fields to search for existing resources
+	 * @param string $api_key API key to use for this request
+	 * @return array of WhyTheCharge_Resource Resource matching the provided $data array
+	 */
+	public static function find($data = array(), $api_key = null) {
+		return self::_find(get_class(), $data, $api_key);
 	}
 }
 ?>

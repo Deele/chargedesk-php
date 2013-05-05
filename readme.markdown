@@ -22,9 +22,11 @@ Example code
 
     // Create a new charge in the system
     $charge = WhyTheCharge_Charge::create(array(
-        "amount" =>         "49.00",
-        "currency" =>       "USD",
-        "customer[id]" =>   "example@whythecharge.com",
+        "amount" =>     "49.00",
+        "currency" =>   "USD",
+        "customer" =>   array(
+            "id" => "example@whythecharge.com"
+        )
     ));
     // $charge now contains the data from the charge you've just created
 

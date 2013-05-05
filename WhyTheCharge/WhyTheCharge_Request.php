@@ -10,11 +10,12 @@ class WhyTheCharge_Request {
 	 * @param $method HTTP request method ("post", "get" or "delete")
 	 * @param $path Relative request path
 	 * @param $params Payload to include in request
+	 * @param string $api_key API key to use for this request
 	 * @return mixed Formatted object based on response from API
 	 */
-	public static function request($method, $path, $params) {
+	public static function request($method, $path, $params, $api_key = null) {
 		$request = new WhyTheCharge_Request();
-		return $request->requestRaw($method, $path, $params);
+		return $request->requestRaw($method, $path, $params, $api_key);
 	}
 
 	/**
@@ -22,11 +23,12 @@ class WhyTheCharge_Request {
 	 * @param $method HTTP request method ("post", "get" or "delete")
 	 * @param $path Relative request path
 	 * @param $params Payload to include in request
+	 * @param string $api_key API key to use for this request
 	 * @return mixed Formatted object based on response from API
 	 */
-	public function requestRaw($method, $path, $params) {
+	public function requestRaw($method, $path, $params, $api_key = null) {
 		$url = WhyTheCharge::$apiUrl."/v".WhyTheCharge::$apiVersion."/$path";
-		list($curlInfo, $curlResponse) = $this->_curlRequest($method, $url, $params);
+		list($curlInfo, $curlResponse) = $this->_curlRequest($method, $url, $params, $api_key);
 		return $this->_parseResponse($curlInfo, $curlResponse);
 	}
 
@@ -50,13 +52,14 @@ class WhyTheCharge_Request {
 	 * @param $method HTTP request method ("post", "get" or "delete")
 	 * @param $url Absolute URL to make request
 	 * @param array $params Payload to send in request
+	 * @param string $api_key API key to use for this request
 	 * @return array $curlInfo, $curlResponse Containing data from response
 	 */
-	private function _curlRequest($method, $url, $params = array()) {
+	private function _curlRequest($method, $url, $params = array(), $api_key = null) {
 		$curlOptions = array();
 		$curlOptions[CURLOPT_URL] = $url;
 		$curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
-		$curlOptions[CURLOPT_USERPWD] = WhyTheCharge::$secretKey.":";
+		$curlOptions[CURLOPT_USERPWD] = ($api_key ? $api_key : WhyTheCharge::$secretKey).":";
 		$curlOptions[CURLOPT_RETURNTRANSFER] = true;
 		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 30;
 		$curlOptions[CURLOPT_TIMEOUT] = 90;

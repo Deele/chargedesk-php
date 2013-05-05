@@ -6,39 +6,43 @@
 class WhyTheCharge_Charge extends WhyTheCharge_Resource {
 
 	/**
-	 * Creates a new Charge
+	 * Creates a new Resource
 	 * @param array $data Fields to create a new charge with
-	 * @return WhyTheCharge_Charge Created charge
+	 * @param string $api_key API key to use for this request
+	 * @return WhyTheCharge_Resource Created resource
 	 */
-	public static function create($data = array()) {
-		return self::_update(get_class(), false, $data);
+	public static function create($data = array(), $api_key = null) {
+		return self::_update(get_class(), false, $data, $api_key);
 	}
 
 	/**
-	 * Retrieves an existing Charge
-	 * @param $key Charge key to retrieve
-	 * @return WhyTheCharge_Charge Charge matching the provided $key
+	 * Retrieves an existing Resource
+	 * @param $key Resource key to retrieve
+	 * @param string $api_key API key to use for this request
+	 * @return WhyTheCharge_Resource Resource matching the provided $key
 	 */
-	public static function retrieve($key) {
-		return self::_find(get_class(), $key);
+	public static function retrieve($key, $api_key = null) {
+		return self::_find(get_class(), $key, $api_key);
 	}
 
 	/**
-	 * @param $key Charge key to update
-	 * @param array $data Fields to update an existing charge with
-	 * @return WhyTheCharge_Charge Charge with updated fields
+	 * @param $key Resource key to update
+	 * @param array $data Fields to update an existing resource with
+	 * @param string $api_key API key to use for this request
+	 * @return WhyTheCharge_Resource Resource with updated fields
 	 */
-	public static function update($key, $data = array()) {
-		return self::_update(get_class(), $key, $data);
+	public static function update($key, $data = array(), $api_key = null) {
+		return self::_update(get_class(), $key, $data, $api_key);
 	}
 
 	/**
-	 * Find one or more existing charges
-	 * @param array $data Fields to search for existing charges
-	 * @return array of WhyTheCharge_Charge Charges matching the provided $data array
+	 * Find one or more existing resources
+	 * @param array $data Fields to search for existing resources
+	 * @param string $api_key API key to use for this request
+	 * @return array of WhyTheCharge_Resource Resource matching the provided $data array
 	 */
-	public static function find($data = array()) {
-		return self::_find(get_class(), $data);
+	public static function find($data = array(), $api_key = null) {
+		return self::_find(get_class(), $data, $api_key);
 	}
 }
 ?>
