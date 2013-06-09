@@ -1,9 +1,9 @@
 <?php
 /**
- * WhyTheCharge Resource Holder
+ * ChargeDesk Resource Holder
  * Is extended by all resources to provide common functions
  */
-class WhyTheCharge_Resource {
+class ChargeDesk_Resource {
 
 	/**
 	 * Perform an update (or create) API request
@@ -38,7 +38,7 @@ class WhyTheCharge_Resource {
 	 * @return string relative api path to resource
 	 */
 	public static function _buildPath($class, $key = false) {
-		$path = str_ireplace("WhyTheCharge_", "", $class);
+		$path = str_ireplace("ChargeDesk_", "", $class);
 		return strtolower($path)."s".($key ? "/".urlencode($key) : "");
 	}
 
@@ -52,7 +52,7 @@ class WhyTheCharge_Resource {
 	 * @return mixed Object of type $class
 	 */
 	public static function _request($class, $method, $path, $data = array(), $api_key = null) {
-		$response = WhyTheCharge_Request::request($method, $path, $data, $api_key);
+		$response = ChargeDesk_Request::request($method, $path, $data, $api_key);
 		return self::_buildResource($class, $response);
 	}
 

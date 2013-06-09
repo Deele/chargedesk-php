@@ -1,9 +1,9 @@
 <?php
 /**
- * WhyTheCharge Error Container
+ * ChargeDesk Error Container
  * Extended by all Errors and provided common functionality
  */
-class WhyTheCharge_Error extends Exception {
+class ChargeDesk_Error extends Exception {
 
 	/**
 	 * @param bool $message Error message

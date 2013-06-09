@@ -1,9 +1,9 @@
 <?php
 /**
  * HTTP Request handler
- * Makes API Request to WhyTheCharge
+ * Makes API Request to ChargeDesk
  */
-class WhyTheCharge_Request {
+class ChargeDesk_Request {
 
 	/**
 	 * Factory method, Make a HTTP request
@@ -14,7 +14,7 @@ class WhyTheCharge_Request {
 	 * @return mixed Formatted object based on response from API
 	 */
 	public static function request($method, $path, $params, $api_key = null) {
-		$request = new WhyTheCharge_Request();
+		$request = new ChargeDesk_Request();
 		return $request->requestRaw($method, $path, $params, $api_key);
 	}
 
@@ -27,13 +27,13 @@ class WhyTheCharge_Request {
 	 * @return mixed Formatted object based on response from API
 	 */
 	public function requestRaw($method, $path, $params, $api_key = null) {
-		$url = WhyTheCharge::$apiUrl."/v".WhyTheCharge::$apiVersion."/$path";
+		$url = ChargeDesk::$apiUrl."/v".ChargeDesk::$apiVersion."/$path";
 		list($curlInfo, $curlResponse) = $this->_curlRequest($method, $url, $params, $api_key);
 		return $this->_parseResponse($curlInfo, $curlResponse);
 	}
 
 	/**
-	 * Parse response data from WhyTheCharge API
+	 * Parse response data from ChargeDesk API
 	 * @param $curlInfo Payload from curl_info request containing information such as status codes
 	 * @param $curlResponse Raw response data
 	 * @return mixed Formatted object based on response from API
@@ -59,12 +59,12 @@ class WhyTheCharge_Request {
 		$curlOptions = array();
 		$curlOptions[CURLOPT_URL] = $url;
 		$curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
-		$curlOptions[CURLOPT_USERPWD] = ($api_key ? $api_key : WhyTheCharge::$secretKey).":";
+		$curlOptions[CURLOPT_USERPWD] = ($api_key ? $api_key : ChargeDesk::$secretKey).":";
 		$curlOptions[CURLOPT_RETURNTRANSFER] = true;
 		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 30;
 		$curlOptions[CURLOPT_TIMEOUT] = 90;
 
-		if(!WhyTheCharge::$verifySSL) {
+		if(!ChargeDesk::$verifySSL) {
 			$curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
 			$curlOptions[CURLOPT_SSL_VERIFYHOST] = false;
 		}
@@ -103,10 +103,10 @@ class WhyTheCharge_Request {
 	 * Generate an error as a result of a curl failure
 	 * @param $code Curl error code
 	 * @param $error Curl Error message
-	 * @throws WhyTheCharge_ConnectError
+	 * @throws ChargeDesk_ConnectError
 	 */
 	private function _curlError($code, $error) {
-		throw new WhyTheCharge_ConnectError("[code $code] $error");
+		throw new ChargeDesk_ConnectError("[code $code] $error");
 	}
 
 	/**
@@ -114,10 +114,10 @@ class WhyTheCharge_Request {
 	 * @param $status_code HTTP status code from response
 	 * @param $curlResponse Raw response data
 	 * @param $responseJSON Formatted response object
-	 * @throws WhyTheCharge_RequestError
+	 * @throws ChargeDesk_RequestError
 	 */
 	private function _apiError($status_code, $curlResponse, $responseJSON) {
-		$message = "There was an error talking to WhyTheCharge";
+		$message = "There was an error talking to ChargeDesk";
 		$incorrectParameter = false;
 		if($responseJSON && $responseJSON->error) {
 			if($responseJSON->error->message) {
@@ -128,7 +128,7 @@ class WhyTheCharge_Request {
 			}
 		}
 
-		throw new WhyTheCharge_RequestError($message, $status_code, $curlResponse, $responseJSON, $incorrectParameter);
+		throw new ChargeDesk_RequestError($message, $status_code, $curlResponse, $responseJSON, $incorrectParameter);
 	}
 
 	/**

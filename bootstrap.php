@@ -1,26 +1,26 @@
 <?php
 /**
- * Bootstrap WhyTheCharge loading
+ * Bootstrap ChargeDesk loading
  * Does not use autoloader for PHP 5.2 compatibility
  */
-class WhyTheCharge_Loader {
-	private $folder = "WhyTheCharge";
+class ChargeDesk_Loader {
+	private $folder = "ChargeDesk";
 	private $files = array(
 		// Core singleton
-		"WhyTheCharge",
+		"ChargeDesk",
 		// Model classes
-		"WhyTheCharge_Resource",
-		"WhyTheCharge_Charge",
-		"WhyTheCharge_Customer",
-		"WhyTheCharge_Product",
-		"WhyTheCharge_Subscription",
-		"WhyTheCharge_Ticket",
+		"ChargeDesk_Resource",
+		"ChargeDesk_Charge",
+		"ChargeDesk_Customer",
+		"ChargeDesk_Product",
+		"ChargeDesk_Subscription",
+		"ChargeDesk_Ticket",
 		// Errors
-		"WhyTheCharge_Error",
-		"WhyTheCharge_ConnectError",
-		"WhyTheCharge_RequestError",
+		"ChargeDesk_Error",
+		"ChargeDesk_ConnectError",
+		"ChargeDesk_RequestError",
 		// Utilities
-		"WhyTheCharge_Request",
+		"ChargeDesk_Request",
 	);
 
 	public function build() {
@@ -31,6 +31,6 @@ class WhyTheCharge_Loader {
 }
 
 // Include all files
-$loader = new WhyTheCharge_Loader();
+$loader = new ChargeDesk_Loader();
 $loader->build();
 ?>
