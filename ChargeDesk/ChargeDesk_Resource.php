@@ -13,7 +13,7 @@ class ChargeDesk_Resource {
 	 * @param string $api_key API key to use for this request
 	 * @return mixed Object of type $class that has been updated or created
 	 */
-	public static function _update($class, $key = false, $data = array(), $api_key = null) {
+	public static function _post($class, $key = false, $data = array(), $api_key = null) {
 		return self::_request($class, "post", self::_buildPath($class, $key), $data, $api_key);
 	}
 
@@ -24,7 +24,7 @@ class ChargeDesk_Resource {
 	 * @param string $api_key API key to use for this request
 	 * @return mixed Object of type $class
 	 */
-	public static function _find($class, $data = array(), $api_key = null) {
+	public static function _get($class, $data = array(), $api_key = null) {
 		if(is_string($data) || is_integer($data)) {
 			return self::_request($class, "get", self::_buildPath($class, $data));
 		}
@@ -39,7 +39,10 @@ class ChargeDesk_Resource {
 	 */
 	public static function _buildPath($class, $key = false) {
 		$path = str_ireplace("ChargeDesk_", "", $class);
-		return strtolower($path)."s".($key ? "/".urlencode($key) : "");
+		if($key && !is_array($key)) {
+			$key = array($key);
+		}
+		return strtolower($path)."s".($key && isset($key[0]) ? "/".urlencode($key[0]) : "").($key && isset($key[1]) ? "/".urlencode($key[1]) : "");
 	}
 
 	/**

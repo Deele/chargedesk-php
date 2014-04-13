@@ -12,7 +12,7 @@ class ChargeDesk_Subscription extends ChargeDesk_Resource {
 	 * @return ChargeDesk_Resource Created resource
 	 */
 	public static function create($data = array(), $api_key = null) {
-		return self::_update(get_class(), false, $data, $api_key);
+		return self::_post(get_class(), false, $data, $api_key);
 	}
 
 	/**
@@ -22,7 +22,7 @@ class ChargeDesk_Subscription extends ChargeDesk_Resource {
 	 * @return ChargeDesk_Resource Resource matching the provided $key
 	 */
 	public static function retrieve($key, $api_key = null) {
-		return self::_find(get_class(), $key, $api_key);
+		return self::_get(get_class(), $key, $api_key);
 	}
 
 	/**
@@ -32,7 +32,7 @@ class ChargeDesk_Subscription extends ChargeDesk_Resource {
 	 * @return ChargeDesk_Resource Resource with updated fields
 	 */
 	public static function update($key, $data = array(), $api_key = null) {
-		return self::_update(get_class(), $key, $data, $api_key);
+		return self::_post(get_class(), $key, $data, $api_key);
 	}
 
 	/**
@@ -42,8 +42,18 @@ class ChargeDesk_Subscription extends ChargeDesk_Resource {
 	 * @return array of ChargeDesk_Resource Resource matching the provided $data array
 	 */
 	public static function find($data = array(), $api_key = null) {
-		return self::_find(get_class(), $data, $api_key);
+		return self::_get(get_class(), $data, $api_key);
 	}
 
+	/**
+	 * Cancel subscription
+	 * @param $key Resource key to update
+	 * @param array $data Fields to update an existing resource with
+	 * @param string $api_key API key to use for this request
+	 * @return ChargeDesk_Resource Resource with updated fields
+	 */
+	public static function cancel($key, $data = array(), $api_key = null) {
+		return self::_post(get_class(), array($key, "cancel"), $data, $api_key);
+	}
 }
 ?>
