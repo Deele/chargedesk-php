@@ -4,6 +4,7 @@
  * Makes API Request to ChargeDesk
  */
 class ChargeDesk_Request {
+    const CONNECT_RETIRES = 3;
 
 	/**
 	 * Factory method, Make a HTTP request
@@ -55,7 +56,7 @@ class ChargeDesk_Request {
 	 * @param string $api_key API key to use for this request
 	 * @return array $curlInfo, $curlResponse Containing data from response
 	 */
-	private function _curlRequest($method, $url, $params = array(), $api_key = null) {
+	private function _curlRequest($method, $url, $params = array(), $api_key = null, $attempts = 0) {
 		$curlOptions = array();
 		$curlOptions[CURLOPT_URL] = $url;
 		$curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
@@ -92,7 +93,15 @@ class ChargeDesk_Request {
 			$code = curl_errno($ch);
 			$error = curl_error($ch);
 			curl_close($ch);
-			$this->_curlError($code, $error);
+            if($code === 0 && $attempts < (self::CONNECT_RETIRES-1)) {
+                $this->_curlRequest($method, $url, $params, $api_key, ++$attempts);
+            }
+            else {
+                if($attempts) {
+                    $error = "[Failed after ".$attempts." attempts] ".$error;
+                }
+                $this->_curlError($code, $error);
+            }
 		}
 
 		curl_close($ch);
