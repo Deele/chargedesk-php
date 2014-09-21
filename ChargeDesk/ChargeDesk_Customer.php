@@ -35,14 +35,24 @@ class ChargeDesk_Customer extends ChargeDesk_Resource {
 		return self::_post(get_class(), $key, $data, $api_key);
 	}
 
-	/**
-	 * Find one or more existing resources
-	 * @param array $data Fields to search for existing resources
-	 * @param string $api_key API key to use for this request
-	 * @return array of ChargeDesk_Resource Resource matching the provided $data array
-	 */
-	public static function find($data = array(), $api_key = null) {
-		return self::_get(get_class(), $data, $api_key);
-	}
+    /**
+     * Find one or more existing resources
+     * @param array $data Fields to search for existing resources
+     * @param string $api_key API key to use for this request
+     * @return array of ChargeDesk_Resource Resource matching the provided $data array
+     */
+    public static function find($data = array(), $api_key = null) {
+        return self::_get(get_class(), $data, $api_key);
+    }
+
+    /**
+     * Gets a snapshot of the billing history for a customer.
+     * @param array $data Fields to search for existing resources
+     * @param string $api_key API key to use for this request
+     * @return array of ChargeDesk_Resource Resource matching the provided $data array
+     */
+    public static function history($data = array(), $api_key = null) {
+        return self::_request("array", "get", self::_buildPath(get_class(), "history"), $data, $api_key);
+    }
 }
 ?>

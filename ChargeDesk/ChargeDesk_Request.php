@@ -42,7 +42,7 @@ class ChargeDesk_Request {
 	private function _parseResponse($curlInfo, $curlResponse) {
 		$status_code = intval($curlInfo['http_code']);
 		$responseJSON = json_decode($curlResponse, false, 10);
-		if($status_code < 200 || $status_code > 299 || !$responseJSON || $responseJSON->error) {
+		if($status_code < 200 || $status_code > 299 || $responseJSON === null || $responseJSON->error) {
 			$this->_apiError($status_code, $curlResponse, $responseJSON);
 		}
 		return $responseJSON;
@@ -138,29 +138,13 @@ class ChargeDesk_Request {
 
 	/**
 	 * Encode Payload parameters
-	 * @param $params Payload to encode
-	 * @param bool $array_name Name to prefix encoded parameters with
+	 * @param $arr Payload to encode
+	 * @param string $prefix Name to prefix encoded parameters with
 	 * @return string Encoded payload parameters
 	 */
-	private function _encode($params, $array_name = false) {
-		if(!is_array($params)) {
-			return $params;
-		}
-
-		$encoded = array();
-		foreach($params as $name => $value) {
-			if(is_array($value)) {
-				$encoded[] = $this->_encode($value, $name);
-			}
-			else if($array_name) {
-				$encoded[] = $array_name."[".urlencode($name)."]=".urlencode($value);
-			}
-			else {
-				$encoded[] = urlencode($name)."=".urlencode($value);
-			}
-		}
-
-		return implode("&", $encoded);
-	}
+    public function _encode($arr, $prefix=null)
+    {
+        return http_build_query($arr);
+    }
 }
 ?>

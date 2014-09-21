@@ -66,6 +66,10 @@ class ChargeDesk_Resource {
 	 * @return mixed Resource of type $class
 	 */
 	public static function _buildResource($class, $response) {
+        if($class == "array") {
+            return $response;
+        }
+
 		$obj = new $class;
 		foreach($response as $name => $value) {
 			$obj->$name = $value;
