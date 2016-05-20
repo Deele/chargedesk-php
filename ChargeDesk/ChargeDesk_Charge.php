@@ -55,5 +55,16 @@ class ChargeDesk_Charge extends ChargeDesk_Resource {
 	public static function refund($key, $data = array(), $api_key = null) {
 		return self::_post(get_class(), array($key, "refund"), $data, $api_key);
 	}
+
+	/**
+	 * Send (or resend) email notification for this charge
+	 * @param $key Resource key to update
+	 * @param array $data Fields to update an existing resource with
+	 * @param string $api_key API key to use for this request
+	 * @return ChargeDesk_Resource Resource with updated fields
+	 */
+	public static function email($key, $data = array(), $api_key = null) {
+		return self::_post(get_class(), array($key, "email"), $data, $api_key);
+	}
 }
 ?>
