@@ -42,7 +42,7 @@ class ChargeDesk_Resource {
 		if($key && !is_array($key)) {
 			$key = array($key);
 		}
-		return strtolower($path)."s".($key && isset($key[0]) ? "/".urlencode($key[0]) : "").($key && isset($key[1]) ? "/".urlencode($key[1]) : "");
+		return strtolower($path)."s".($key && isset($key[0]) ? "/".rawurlencode($key[0]) : "").($key && isset($key[1]) ? "/".rawurlencode($key[1]) : "");
 	}
 
 	/**
