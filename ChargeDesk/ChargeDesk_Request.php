@@ -41,7 +41,7 @@ class ChargeDesk_Request {
 	 */
 	private function _parseResponse($curlInfo, $curlResponse) {
 		$status_code = intval($curlInfo['http_code']);
-		$responseJSON = json_decode($curlResponse, false, 10);
+		$responseJSON = json_decode($curlResponse, false, 20);
 		if($status_code < 200 || $status_code > 299 || $responseJSON === null || $responseJSON->error) {
 			$this->_apiError($status_code, $curlResponse, $responseJSON);
 		}
