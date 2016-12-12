@@ -13,7 +13,7 @@ class ChargeDesk_Error extends Exception {
 	 * @param string $incorrectParameter Request parameter which triggered this error
 	 */
 	public function __construct($message = false, $statusCode = 0, $response = "", $responseObject = null, $incorrectParameter = "") {
-		parent::__construct($message);
+		parent::__construct($message, $statusCode);
 
 		$this->statusCode = $statusCode;
 		$this->response = $response;
