@@ -57,7 +57,7 @@ class ChargeDesk_Request {
 	 * @return array $curlInfo, $curlResponse Containing data from response
 	 */
 	private function _curlRequest($method, $url, $params = array(), $api_key = null, $attempts = 0) {
-		global $cdCurlHandle;
+		//global $cdCurlHandle;
 		$curlOptions = array();
 		$curlOptions[CURLOPT_URL] = $url;
 		$curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
@@ -65,10 +65,10 @@ class ChargeDesk_Request {
 		$curlOptions[CURLOPT_RETURNTRANSFER] = true;
 		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 30;
 		$curlOptions[CURLOPT_TIMEOUT] = 90;
-		$curlOptions[CURLOPT_HTTPHEADER] = array(
+		/*$curlOptions[CURLOPT_HTTPHEADER] = array(
 			'Connection: Keep-Alive',
 			'Keep-Alive: 300'
-		);
+		);*/
 
 		if(!ChargeDesk::$verifySSL) {
 			$curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
@@ -85,7 +85,7 @@ class ChargeDesk_Request {
 			}
 		}
 
-		if(!$cdCurlHandle) $cdCurlHandle = curl_init();
+		$cdCurlHandle = curl_init();
 		curl_setopt_array($cdCurlHandle, $curlOptions);
 		$curlResponse = curl_exec($cdCurlHandle);
 		$curlInfo = curl_getinfo($cdCurlHandle);
@@ -107,7 +107,7 @@ class ChargeDesk_Request {
                 $this->_curlError($code, $error);
             }
 		}
-		//curl_close($ch);
+		curl_close($cdCurlHandle);
 
 		return array($curlInfo, $curlResponse);
 	}
