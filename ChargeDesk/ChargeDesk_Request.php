@@ -90,7 +90,8 @@ class ChargeDesk_Request {
 		$curlResponse = curl_exec($cdCurlHandle);
 		$curlInfo = curl_getinfo($cdCurlHandle);
 
-		if(!$curlResponse) {
+		$status_code = intval($curlInfo['http_code']);
+		if(!$curlResponse || !$status_code) {
 			$code = curl_errno($cdCurlHandle);
 			$error = curl_error($cdCurlHandle);
 			curl_close($cdCurlHandle);
@@ -107,12 +108,6 @@ class ChargeDesk_Request {
             }
 		}
 		//curl_close($ch);
-
-		$status_code = intval($curlInfo['http_code']);
-		if($status_code === 0 && ++$attempts < self::CONNECT_RETIRES) {
-			sleep($attempts);
-			return $this->_curlRequest($method, $url, $params, $api_key, $attempts);
-		}
 
 		return array($curlInfo, $curlResponse);
 	}
