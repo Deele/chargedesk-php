@@ -62,7 +62,7 @@ class ChargeDesk_Request {
 		$curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
 		$curlOptions[CURLOPT_USERPWD] = ($api_key ? $api_key : ChargeDesk::$secretKey).":";
 		$curlOptions[CURLOPT_RETURNTRANSFER] = true;
-		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 30;
+		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 20;
 		$curlOptions[CURLOPT_TIMEOUT] = 90;
 
 		if(!ChargeDesk::$verifySSL) {
@@ -91,7 +91,7 @@ class ChargeDesk_Request {
 			$error = curl_error($cdCurlHandle);
 			curl_close($cdCurlHandle);
 			$cdCurlHandle = false;
-            if($code === 0 && ++$attempts < self::CONNECT_RETIRES) {
+            if(($code === 0 || $code === 52) && ++$attempts < self::CONNECT_RETIRES) {
 				sleep($attempts);
                 return $this->_curlRequest($method, $url, $params, $api_key, $attempts);
             }
@@ -114,7 +114,7 @@ class ChargeDesk_Request {
 	 * @throws ChargeDesk_ConnectError
 	 */
 	private function _curlError($code, $error) {
-		throw new ChargeDesk_ConnectError("[code $code] $error");
+		throw new ChargeDesk_ConnectError($error, $code);
 	}
 
 	/**
