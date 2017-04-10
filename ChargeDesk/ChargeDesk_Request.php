@@ -91,7 +91,7 @@ class ChargeDesk_Request {
 			$error = curl_error($cdCurlHandle);
 			curl_close($cdCurlHandle);
 			$cdCurlHandle = false;
-            if(($code === 0 || $code === 52) && ++$attempts < self::CONNECT_RETIRES) {
+            if(in_array($code, array(0, 28, 52), true) && ++$attempts < self::CONNECT_RETIRES) {
 				sleep($attempts);
                 return $this->_curlRequest($method, $url, $params, $api_key, $attempts);
             }
