@@ -89,6 +89,7 @@ class ChargeDesk_Request {
 		if(!$curlResponse || !$status_code) {
 			$code = curl_errno($cdCurlHandle);
 			$error = curl_error($cdCurlHandle);
+			$error .= " (HTTP Status $status_code)";
 			curl_close($cdCurlHandle);
 			$cdCurlHandle = false;
             if(in_array($code, array(0, 28, 52), true) && ++$attempts < self::CONNECT_RETIRES) {
