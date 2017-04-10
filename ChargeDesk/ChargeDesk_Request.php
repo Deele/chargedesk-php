@@ -62,8 +62,8 @@ class ChargeDesk_Request {
 		$curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
 		$curlOptions[CURLOPT_USERPWD] = ($api_key ? $api_key : ChargeDesk::$secretKey).":";
 		$curlOptions[CURLOPT_RETURNTRANSFER] = true;
-		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 20;
-		$curlOptions[CURLOPT_TIMEOUT] = 90;
+		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 30;
+		$curlOptions[CURLOPT_TIMEOUT] = 120;
 
 		if(!ChargeDesk::$verifySSL) {
 			$curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
