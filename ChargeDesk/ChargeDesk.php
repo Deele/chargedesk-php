@@ -8,12 +8,14 @@ class ChargeDesk {
 	public static $apiUrl = 'https://api.chargedesk.com';
 	public static $apiVersion = '1';
 	public static $verifySSL = true;
+	public static $headers = [];
 
 	/*
 	 * Set the default secret key used for future calls
 	 */
 	public static function apiKey($key) {
 		self::$secretKey = $key;
+		self::resetHeaders();
 	}
 
 	/*
@@ -35,6 +37,20 @@ class ChargeDesk {
 	 */
 	public static function verifySSL($verify) {
 		self::$verifySSL = $verify;
+	}
+
+	/*
+	 * Clears any headers which have been set
+	 */
+	public static function resetHeaders() {
+		self::$headers = [];
+	}
+
+	/*
+	 * Adds a header to all requests
+	 */
+	public static function addHeader($header) {
+		self::$headers[] = $header;
 	}
 }
 ?>

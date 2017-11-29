@@ -70,6 +70,10 @@ class ChargeDesk_Request {
 			$curlOptions[CURLOPT_SSL_VERIFYHOST] = false;
 		}
 
+		if(ChargeDesk::$headers) {
+			$curlOptions[CURLOPT_HTTPHEADER] = ChargeDesk::$headers;
+		}
+
 		if($method == "post") {
 			$curlOptions[CURLOPT_POST] = 1;
 			$curlOptions[CURLOPT_POSTFIELDS] = $this->_encode($params);
