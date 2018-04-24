@@ -26,7 +26,7 @@ class ChargeDesk_Resource {
 	 */
 	public static function _get($class, $data = array(), $api_key = null) {
 		if(is_string($data) || is_integer($data)) {
-			return self::_request($class, "get", self::_buildPath($class, $data));
+			return self::_request($class, "get", self::_buildPath($class, $data), array(), $api_key);
 		}
 		return self::_request($class, "get", self::_buildPath($class), $data, $api_key);
 	}

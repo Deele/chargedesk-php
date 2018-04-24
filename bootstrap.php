@@ -19,6 +19,7 @@ class ChargeDesk_Loader {
 		"ChargeDesk_Error",
 		"ChargeDesk_ConnectError",
 		"ChargeDesk_RequestError",
+		"ChargeDesk_RateLimitError",
 		// Utilities
 		"ChargeDesk_Request",
 	);

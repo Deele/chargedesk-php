@@ -29,21 +29,22 @@ class ChargeDesk_Request {
 	 */
 	public function requestRaw($method, $path, $params, $api_key = null) {
 		$url = ChargeDesk::$apiUrl."/v".ChargeDesk::$apiVersion."/$path";
-		list($curlInfo, $curlResponse) = $this->_curlRequest($method, $url, $params, $api_key);
-		return $this->_parseResponse($curlInfo, $curlResponse);
+		list($curlInfo, $responseHeader, $responseBody) = $this->_curlRequest($method, $url, $params, $api_key);
+		return $this->_parseResponse($curlInfo, $responseHeader, $responseBody);
 	}
 
 	/**
 	 * Parse response data from ChargeDesk API
 	 * @param $curlInfo Payload from curl_info request containing information such as status codes
-	 * @param $curlResponse Raw response data
+	 * @param $responseHeader Raw response header data
+	 * @param $responseBody Raw response body data
 	 * @return mixed Formatted object based on response from API
 	 */
-	private function _parseResponse($curlInfo, $curlResponse) {
+	private function _parseResponse($curlInfo, $responseHeader, $responseBody) {
 		$status_code = intval($curlInfo['http_code']);
-		$responseJSON = json_decode($curlResponse, false, 20);
+		$responseJSON = json_decode($responseBody, false, 20);
 		if($status_code < 200 || $status_code > 299 || $responseJSON === null || $responseJSON->error) {
-			$this->_apiError($status_code, $curlResponse, $responseJSON);
+			$this->_apiError($status_code, $responseHeader, $responseBody, $responseJSON);
 		}
 		return $responseJSON;
 	}
@@ -54,7 +55,7 @@ class ChargeDesk_Request {
 	 * @param $url Absolute URL to make request
 	 * @param array $params Payload to send in request
 	 * @param string $api_key API key to use for this request
-	 * @return array $curlInfo, $curlResponse Containing data from response
+	 * @return array $curlInfo, $responseHeader, $responseBody Containing data from response
 	 */
 	private function _curlRequest($method, $url, $params = array(), $api_key = null, $attempts = 0) {
 		$curlOptions = array();
@@ -64,6 +65,7 @@ class ChargeDesk_Request {
 		$curlOptions[CURLOPT_RETURNTRANSFER] = true;
 		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 30;
 		$curlOptions[CURLOPT_TIMEOUT] = 120;
+		$curlOptions[CURLOPT_HEADER] = true;
 
 		if(!ChargeDesk::$verifySSL) {
 			$curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
@@ -89,8 +91,12 @@ class ChargeDesk_Request {
 		$curlResponse = curl_exec($cdCurlHandle);
 		$curlInfo = curl_getinfo($cdCurlHandle);
 
+		$header_size = curl_getinfo($cdCurlHandle, CURLINFO_HEADER_SIZE);
+		$responseHeader = substr($curlResponse, 0, $header_size);
+		$responseBody = substr($curlResponse, $header_size);
+
 		$status_code = intval($curlInfo['http_code']);
-		if(!$curlResponse || !$status_code) {
+		if(!$responseBody || !$status_code) {
 			$code = curl_errno($cdCurlHandle);
 			$error = curl_error($cdCurlHandle);
 			$error .= " (HTTP Status $status_code)";
@@ -109,7 +115,7 @@ class ChargeDesk_Request {
 		}
 		curl_close($cdCurlHandle);
 
-		return array($curlInfo, $curlResponse);
+		return array($curlInfo, $responseHeader, $responseBody);
 	}
 
 	/**
@@ -123,13 +129,32 @@ class ChargeDesk_Request {
 	}
 
 	/**
+	 * Converts headers into a more readable format
+	 * @param $responseHeader Raw response header data
+	 * @return array $headers Formatted response header data
+	 */
+	private function _parseHeader($responseHeader) {
+		$headers = array();
+		if($responseHeader) {
+			foreach (explode("\r\n", $responseHeader) as $headerLine) {
+				if (strpos($headerLine, ":") === false) continue;
+				list($v, $val) = explode(": ", $headerLine);
+				if ($v == null) continue;
+				$headers[$v] = $val;
+			}
+		}
+		return $headers;
+	}
+
+	/**
 	 * Generate an error as a result of a bad HTTP request
 	 * @param $status_code HTTP status code from response
-	 * @param $curlResponse Raw response data
+	 * @param $responseHeader Raw response header data
+	 * @param $responseBody Raw response body data
 	 * @param $responseJSON Formatted response object
 	 * @throws ChargeDesk_RequestError
 	 */
-	private function _apiError($status_code, $curlResponse, $responseJSON) {
+	private function _apiError($status_code, $responseHeader, $responseBody, $responseJSON) {
 		$message = "There was an error talking to ChargeDesk";
 		$incorrectParameter = false;
 		if($responseJSON && $responseJSON->error) {
@@ -141,7 +166,11 @@ class ChargeDesk_Request {
 			}
 		}
 
-		throw new ChargeDesk_RequestError($message, $status_code, $curlResponse, $responseJSON, $incorrectParameter);
+		if($status_code === 429) {
+			throw new ChargeDesk_RateLimitError($message, $status_code, $responseHeader, $responseBody, $this->_parseHeader($responseHeader), $responseJSON, $incorrectParameter);
+		}
+
+		throw new ChargeDesk_RequestError($message, $status_code, $responseHeader, $responseBody, $this->_parseHeader($responseHeader), $responseJSON, $incorrectParameter);
 	}
 
 	/**
