@@ -35,6 +35,16 @@ class ChargeDesk_Customer extends ChargeDesk_Resource {
 		return self::_post(get_class(), $key, $data, $api_key);
 	}
 
+	/**
+	 * Deletes an existing Resource
+	 * @param $key Resource key to delete
+	 * @param string $api_key API key to use for this request
+	 * @return ChargeDesk_Resource Resource matching the provided $key
+	 */
+	public static function delete($key, $data = array(), $api_key = null) {
+		return self::_delete(get_class(), $key, $data, $api_key);
+	}
+
     /**
      * Find one or more existing resources
      * @param array $data Fields to search for existing resources

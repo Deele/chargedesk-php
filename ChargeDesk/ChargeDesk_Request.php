@@ -80,9 +80,12 @@ class ChargeDesk_Request {
 			$curlOptions[CURLOPT_POST] = 1;
 			$curlOptions[CURLOPT_POSTFIELDS] = $this->_encode($params);
 		}
-		else if($method == "get") {
+		else if($method == "get" || $method == "delete") {
 			if($params) {
 				$curlOptions[CURLOPT_URL] = $url."?".$this->_encode($params);
+			}
+			if($method == "delete") {
+				$curlOptions[CURLOPT_CUSTOMREQUEST] = "DELETE";
 			}
 		}
 

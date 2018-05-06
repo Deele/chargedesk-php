@@ -32,6 +32,18 @@ class ChargeDesk_Resource {
 	}
 
 	/**
+	 * Perform a delete API request
+	 * @param string $class Class of calling resource
+	 * @param bool $key Optional identifier of resource to update
+	 * @param array $data Payload of fields to update
+	 * @param string $api_key API key to use for this request
+	 * @return mixed Object of type $class that has been updated or created
+	 */
+	public static function _delete($class, $key = false, $data = array(), $api_key = null) {
+		return self::_request($class, "delete", self::_buildPath($class, $key), $data, $api_key);
+	}
+
+	/**
 	 * Converts a Resource class to its api path
 	 * @param string $class Class to convert
 	 * @param bool $key Optionally an identifier to specific resource
