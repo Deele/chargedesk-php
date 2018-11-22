@@ -1,9 +1,13 @@
 <?php
+namespace ChargeDesk;
+
+use Exception;
+
 /**
  * ChargeDesk Error Container
  * Extended by all Errors and provided common functionality
  */
-class ChargeDesk_Error extends Exception {
+class Error extends Exception {
 
 	/**
 	 * @param bool $message Error message
@@ -74,4 +78,4 @@ class ChargeDesk_Error extends Exception {
 		return $this->incorrectParameter;
 	}
 }
-?>
+class_alias('ChargeDesk\Error', 'ChargeDesk_Error');
