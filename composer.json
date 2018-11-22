@@ -1,0 +1,37 @@
+{
+  "name": "Deele/chargedesk-php",
+  "description": "ChargeDesk PHP Library",
+  "homepage": "https://github.com/Deele/chargedesk-php#readme",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "James Peter",
+      "email": "github@zemaj.com",
+      "homepage": "http://zemaj.com/",
+      "role": "Creator"
+    },
+    {
+      "name": "Nils",
+      "email": "deele@tuta.io",
+      "homepage": "https://github.com/Deele/",
+      "role": "Contributor"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/Deele/chargedesk-php/issues",
+    "source": "https://github.com/Deele/chargedesk-php"
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "ChargeDesk": "lib/"
+    },
+    "psr-4": {
+      "ChargeDesk\\": "lib/ChargeDesk"
+    }
+  }
+}
