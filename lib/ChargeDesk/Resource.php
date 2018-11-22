@@ -1,9 +1,11 @@
 <?php
+namespace ChargeDesk;
+
 /**
  * ChargeDesk Resource Holder
  * Is extended by all resources to provide common functions
  */
-class ChargeDesk_Resource {
+class Resource {
 
 	/**
 	 * Perform an update (or create) API request
@@ -89,4 +91,4 @@ class ChargeDesk_Resource {
 		return $obj;
 	}
 }
-?>
+class_alias('ChargeDesk\Resource', 'ChargeDesk_Resource');
