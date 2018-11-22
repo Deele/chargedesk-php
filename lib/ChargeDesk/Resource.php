@@ -69,7 +69,7 @@ class Resource {
 	 * @return mixed Object of type $class
 	 */
 	public static function _request($class, $method, $path, $data = array(), $api_key = null) {
-		$response = ChargeDesk_Request::request($method, $path, $data, $api_key);
+		$response = Request::request($method, $path, $data, $api_key);
 		return self::_buildResource($class, $response);
 	}
 

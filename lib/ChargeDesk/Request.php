@@ -1,9 +1,11 @@
 <?php
+namespace ChargeDesk;
+
 /**
- * HTTP Request handler
+ * ChargeDesk HTTP Request handler
  * Makes API Request to ChargeDesk
  */
-class ChargeDesk_Request {
+class Request {
     const CONNECT_RETIRES = 3;
 
 	/**
@@ -15,7 +17,7 @@ class ChargeDesk_Request {
 	 * @return mixed Formatted object based on response from API
 	 */
 	public static function request($method, $path, $params, $api_key = null) {
-		$request = new ChargeDesk_Request();
+		$request = new Request();
 		return $request->requestRaw($method, $path, $params, $api_key);
 	}
 
@@ -28,7 +30,7 @@ class ChargeDesk_Request {
 	 * @return mixed Formatted object based on response from API
 	 */
 	public function requestRaw($method, $path, $params, $api_key = null) {
-		$url = ChargeDesk::$apiUrl."/v".ChargeDesk::$apiVersion."/$path";
+		$url = Configuration::$apiUrl."/v".Configuration::$apiVersion."/$path";
 		list($curlInfo, $responseHeader, $responseBody) = $this->_curlRequest($method, $url, $params, $api_key);
 		return $this->_parseResponse($curlInfo, $responseHeader, $responseBody);
 	}
@@ -61,19 +63,19 @@ class ChargeDesk_Request {
 		$curlOptions = array();
 		$curlOptions[CURLOPT_URL] = $url;
 		$curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
-		$curlOptions[CURLOPT_USERPWD] = ($api_key ? $api_key : ChargeDesk::$secretKey).":";
+		$curlOptions[CURLOPT_USERPWD] = ($api_key ? $api_key : Configuration::$secretKey).":";
 		$curlOptions[CURLOPT_RETURNTRANSFER] = true;
 		$curlOptions[CURLOPT_CONNECTTIMEOUT] = 30;
 		$curlOptions[CURLOPT_TIMEOUT] = 120;
 		$curlOptions[CURLOPT_HEADER] = true;
 
-		if(!ChargeDesk::$verifySSL) {
+		if(!Configuration::$verifySSL) {
 			$curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
 			$curlOptions[CURLOPT_SSL_VERIFYHOST] = false;
 		}
 
-		if(ChargeDesk::$headers) {
-			$curlOptions[CURLOPT_HTTPHEADER] = ChargeDesk::$headers;
+		if(Configuration::$headers) {
+			$curlOptions[CURLOPT_HTTPHEADER] = Configuration::$headers;
 		}
 
 		if($method == "post") {
@@ -187,4 +189,4 @@ class ChargeDesk_Request {
         return http_build_query($arr);
     }
 }
-?>
+class_alias('ChargeDesk\Request', 'ChargeDesk_Request');
