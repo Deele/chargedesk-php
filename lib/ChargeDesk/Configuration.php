@@ -66,4 +66,4 @@ class Configuration
     }
 }
 
-class_alias('ChargeDesk\Configuration', 'ChargeDesk');
+class_alias('ChargeDesk\Configuration', 'ChargeDesk_Configuration');
