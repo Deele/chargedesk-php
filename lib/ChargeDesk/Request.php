@@ -127,10 +127,10 @@ class Request {
 	 * Generate an error as a result of a curl failure
 	 * @param $code Curl error code
 	 * @param $error Curl Error message
-	 * @throws ChargeDesk_ConnectError
+	 * @throws ConnectError
 	 */
 	private function _curlError($code, $error) {
-		throw new ChargeDesk_ConnectError($error, $code);
+		throw new ConnectError($error, $code);
 	}
 
 	/**
