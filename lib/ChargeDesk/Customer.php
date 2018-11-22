@@ -3,6 +3,8 @@ namespace ChargeDesk;
 
 /**
  * ChargeDesk Customer Resource
+ *
+ * @package ChargeDesk
  */
 class Customer extends Resource {
 

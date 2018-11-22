@@ -4,6 +4,8 @@ namespace ChargeDesk;
 /**
  * ChargeDesk Charge Resource
  * Create, Update, Retrieve and Find Charges on ChargeDesk
+ *
+ * @package ChargeDesk
  */
 class Charge extends Resource {
 

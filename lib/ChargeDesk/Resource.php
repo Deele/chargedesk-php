@@ -4,6 +4,8 @@ namespace ChargeDesk;
 /**
  * ChargeDesk Resource Holder
  * Is extended by all resources to provide common functions
+ *
+ * @package ChargeDesk
  */
 class Resource {
 

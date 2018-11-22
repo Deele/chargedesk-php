@@ -3,6 +3,8 @@ namespace ChargeDesk;
 
 /**
  * ChargeDesk Subscription Handler
+ *
+ * @package ChargeDesk
  */
 class Subscription extends Resource {
 

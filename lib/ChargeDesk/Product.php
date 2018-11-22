@@ -3,6 +3,8 @@ namespace ChargeDesk;
 
 /**
  * ChargeDesk Product Handler
+ *
+ * @package ChargeDesk
  */
 class Product extends Resource {
 

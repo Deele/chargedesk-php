@@ -4,6 +4,8 @@ namespace ChargeDesk;
 /**
  * ChargeDesk Singleton
  * This class provides an easy way to globally update common variables.
+ *
+ * @package ChargeDesk
  */
 class Configuration {
 	public static $secretKey;

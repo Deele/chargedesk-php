@@ -6,6 +6,8 @@ use Exception;
 /**
  * ChargeDesk Error Container
  * Extended by all Errors and provided common functionality
+ *
+ * @package ChargeDesk
  */
 class Error extends Exception {
 

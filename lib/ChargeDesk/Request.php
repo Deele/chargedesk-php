@@ -4,6 +4,8 @@ namespace ChargeDesk;
 /**
  * ChargeDesk HTTP Request handler
  * Makes API Request to ChargeDesk
+ *
+ * @package ChargeDesk
  */
 class Request {
     const CONNECT_RETIRES = 3;
