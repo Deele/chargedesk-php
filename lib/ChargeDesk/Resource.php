@@ -18,6 +18,9 @@ class Resource
      * @param array $data Payload of fields to update
      * @param string $api_key API key to use for this request
      * @return mixed Object of type $class that has been updated or created
+     * @throws ConnectError
+     * @throws RateLimitError
+     * @throws RequestError
      */
     public static function _post($class, $key = false, $data = array(), $api_key = null)
     {
@@ -30,6 +33,9 @@ class Resource
      * @param array $data Payload of lookup request
      * @param string $api_key API key to use for this request
      * @return mixed Object of type $class
+     * @throws ConnectError
+     * @throws RateLimitError
+     * @throws RequestError
      */
     public static function _get($class, $data = array(), $api_key = null)
     {
@@ -46,6 +52,9 @@ class Resource
      * @param array $data Payload of fields to update
      * @param string $api_key API key to use for this request
      * @return mixed Object of type $class that has been updated or created
+     * @throws ConnectError
+     * @throws RateLimitError
+     * @throws RequestError
      */
     public static function _delete($class, $key = false, $data = array(), $api_key = null)
     {
@@ -75,6 +84,9 @@ class Resource
      * @param array $data Request payload
      * @param string $api_key API key to use for this request
      * @return mixed Object of type $class
+     * @throws ConnectError
+     * @throws RateLimitError
+     * @throws RequestError
      */
     public static function _request($class, $method, $path, $data = array(), $api_key = null)
     {
@@ -85,7 +97,7 @@ class Resource
     /**
      * Given an API response, build the Resource
      * @param string $class Class of calling resource
-     * @param string $response API Response in stdClass form
+     * @param array|string $response API Response in stdClass form
      * @return mixed Resource of type $class
      */
     public static function _buildResource($class, $response)

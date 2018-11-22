@@ -45,7 +45,8 @@ class Customer extends Resource
 
     /**
      * Deletes an existing Resource
-     * @param $key Resource key to delete
+     * @param string $key Resource key to delete
+     * @param array $data Payload of fields to update
      * @param string $api_key API key to use for this request
      * @return Resource Resource matching the provided $key
      */

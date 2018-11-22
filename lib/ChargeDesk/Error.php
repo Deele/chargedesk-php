@@ -12,12 +12,19 @@ use Exception;
  */
 class Error extends Exception
 {
+    protected $incorrectParameter;
+    protected $responseObject;
+    protected $headerArray;
+    protected $response;
+    protected $header;
+    protected $statusCode;
 
     /**
      * @param bool $message Error message
      * @param int $statusCode HTTP Status code from API response
      * @param string $header Full HTTP Response header data
      * @param string $response Full HTTP Response body data
+     * @param null|array $headerArray
      * @param mixed $responseObject Response data decoded into object format
      * @param string $incorrectParameter Request parameter which triggered this error
      */
@@ -50,7 +57,7 @@ class Error extends Exception
 
     /**
      * Get response header data
-     * @param $key Name of the header field to return (case insensitive)
+     * @param string $key Name of the header field to return (case insensitive)
      * @return string Matching header field, Full HTTP Response header data (if $key is not set), null (if no header name matches $key)
      */
     public function getHeader($key = null)

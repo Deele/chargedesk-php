@@ -14,11 +14,14 @@ class Request
 
     /**
      * Factory method, Make a HTTP request
-     * @param $method HTTP request method ("post", "get" or "delete")
-     * @param $path Relative request path
-     * @param $params Payload to include in request
+     * @param string $method HTTP request method ("post", "get" or "delete")
+     * @param string $path Relative request path
+     * @param array $params Payload to include in request
      * @param string $api_key API key to use for this request
      * @return mixed Formatted object based on response from API
+     * @throws ConnectError
+     * @throws RateLimitError
+     * @throws RequestError
      */
     public static function request($method, $path, $params, $api_key = null)
     {
@@ -28,11 +31,14 @@ class Request
 
     /**
      * Make a HTTP request
-     * @param $method HTTP request method ("post", "get" or "delete")
-     * @param $path Relative request path
-     * @param $params Payload to include in request
+     * @param string $method HTTP request method ("post", "get" or "delete")
+     * @param string $path Relative request path
+     * @param array $params Payload to include in request
      * @param string $api_key API key to use for this request
      * @return mixed Formatted object based on response from API
+     * @throws ConnectError
+     * @throws RateLimitError
+     * @throws RequestError
      */
     public function requestRaw($method, $path, $params, $api_key = null)
     {
@@ -43,10 +49,12 @@ class Request
 
     /**
      * Parse response data from ChargeDesk API
-     * @param $curlInfo Payload from curl_info request containing information such as status codes
-     * @param $responseHeader Raw response header data
-     * @param $responseBody Raw response body data
+     * @param array $curlInfo Payload from curl_info request containing information such as status codes
+     * @param string $responseHeader Raw response header data
+     * @param string $responseBody Raw response body data
      * @return mixed Formatted object based on response from API
+     * @throws RateLimitError
+     * @throws RequestError
      */
     private function _parseResponse($curlInfo, $responseHeader, $responseBody)
     {
@@ -60,11 +68,13 @@ class Request
 
     /**
      * Perform final HTTP request
-     * @param $method HTTP request method ("post", "get" or "delete")
-     * @param $url Absolute URL to make request
+     * @param string $method HTTP request method ("post", "get" or "delete")
+     * @param string $url Absolute URL to make request
      * @param array $params Payload to send in request
      * @param string $api_key API key to use for this request
+     * @param int $attempts
      * @return array $curlInfo, $responseHeader, $responseBody Containing data from response
+     * @throws ConnectError
      */
     private function _curlRequest($method, $url, $params = array(), $api_key = null, $attempts = 0)
     {
@@ -133,8 +143,8 @@ class Request
 
     /**
      * Generate an error as a result of a curl failure
-     * @param $code Curl error code
-     * @param $error Curl Error message
+     * @param int $code Curl error code
+     * @param string $error Curl Error message
      * @throws ConnectError
      */
     private function _curlError($code, $error)
@@ -144,7 +154,7 @@ class Request
 
     /**
      * Converts headers into a more readable format
-     * @param $responseHeader Raw response header data
+     * @param string $responseHeader Raw response header data
      * @return array $headers Formatted response header data
      */
     private function _parseHeader($responseHeader)
@@ -167,10 +177,11 @@ class Request
 
     /**
      * Generate an error as a result of a bad HTTP request
-     * @param $status_code HTTP status code from response
-     * @param $responseHeader Raw response header data
-     * @param $responseBody Raw response body data
-     * @param $responseJSON Formatted response object
+     * @param int $status_code HTTP status code from response
+     * @param string $responseHeader Raw response header data
+     * @param string $responseBody Raw response body data
+     * @param object $responseJSON Formatted response object
+     * @throws RateLimitError
      * @throws RequestError
      */
     private function _apiError($status_code, $responseHeader, $responseBody, $responseJSON)
@@ -197,7 +208,7 @@ class Request
 
     /**
      * Encode Payload parameters
-     * @param $arr Payload to encode
+     * @param array $arr Payload to encode
      * @param string $prefix Name to prefix encoded parameters with
      * @return string Encoded payload parameters
      */
