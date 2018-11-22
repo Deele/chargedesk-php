@@ -1,9 +1,11 @@
 <?php
+namespace ChargeDesk;
+
 /**
  * ChargeDesk Singleton
  * This class provides an easy way to globally update common variables.
  */
-class ChargeDesk {
+class Configuration {
 	public static $secretKey;
 	public static $apiUrl = 'https://api.chargedesk.com';
 	public static $apiVersion = '1';
@@ -53,4 +55,4 @@ class ChargeDesk {
 		self::$headers[] = $header;
 	}
 }
-?>
+class_alias('ChargeDesk\Configuration', 'ChargeDesk');
