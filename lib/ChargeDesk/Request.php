@@ -172,7 +172,7 @@ class Request {
 		}
 
 		if($status_code === 429) {
-			throw new ChargeDesk_RateLimitError($message, $status_code, $responseHeader, $responseBody, $this->_parseHeader($responseHeader), $responseJSON, $incorrectParameter);
+			throw new RateLimitError($message, $status_code, $responseHeader, $responseBody, $this->_parseHeader($responseHeader), $responseJSON, $incorrectParameter);
 		}
 
 		throw new RequestError($message, $status_code, $responseHeader, $responseBody, $this->_parseHeader($responseHeader), $responseJSON, $incorrectParameter);
