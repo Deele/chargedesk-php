@@ -175,7 +175,7 @@ class Request {
 			throw new ChargeDesk_RateLimitError($message, $status_code, $responseHeader, $responseBody, $this->_parseHeader($responseHeader), $responseJSON, $incorrectParameter);
 		}
 
-		throw new ChargeDesk_RequestError($message, $status_code, $responseHeader, $responseBody, $this->_parseHeader($responseHeader), $responseJSON, $incorrectParameter);
+		throw new RequestError($message, $status_code, $responseHeader, $responseBody, $this->_parseHeader($responseHeader), $responseJSON, $incorrectParameter);
 	}
 
 	/**
