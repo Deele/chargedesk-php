@@ -1,4 +1,5 @@
 <?php
+
 namespace ChargeDesk;
 
 /**
@@ -7,5 +8,8 @@ namespace ChargeDesk;
  *
  * @package ChargeDesk
  */
-class RequestError extends Error {}
+class RequestError extends Error
+{
+}
+
 class_alias('ChargeDesk\RequestError', 'ChargeDesk_RequestError');

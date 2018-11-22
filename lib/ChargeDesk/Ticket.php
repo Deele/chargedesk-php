@@ -1,4 +1,5 @@
 <?php
+
 namespace ChargeDesk;
 
 /**
@@ -6,5 +7,8 @@ namespace ChargeDesk;
  *
  * @package ChargeDesk
  */
-class Ticket extends Resource {}
+class Ticket extends Resource
+{
+}
+
 class_alias('ChargeDesk\Ticket', 'ChargeDesk_Ticket');

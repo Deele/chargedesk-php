@@ -1,4 +1,5 @@
 <?php
+
 namespace ChargeDesk;
 
 /**
@@ -7,5 +8,8 @@ namespace ChargeDesk;
  *
  * @package ChargeDesk
  */
-class RateLimitError extends Error {}
+class RateLimitError extends Error
+{
+}
+
 class_alias('ChargeDesk\RateLimitError', 'ChargeDesk_RateLimitError');

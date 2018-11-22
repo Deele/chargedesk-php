@@ -1,4 +1,5 @@
 <?php
+
 namespace ChargeDesk;
 
 /**
@@ -7,5 +8,8 @@ namespace ChargeDesk;
  *
  * @package ChargeDesk
  */
-class ConnectError extends Error {}
+class ConnectError extends Error
+{
+}
+
 class_alias('ChargeDesk\ConnectError', 'ChargeDesk_ConnectError');
