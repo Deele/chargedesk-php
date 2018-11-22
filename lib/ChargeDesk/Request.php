@@ -203,7 +203,7 @@ class Request
      */
     public function _encode($arr, $prefix = null)
     {
-        return http_build_query($arr);
+        return http_build_query($arr, $prefix);
     }
 }
 
