@@ -157,7 +157,7 @@ class Request {
 	 * @param $responseHeader Raw response header data
 	 * @param $responseBody Raw response body data
 	 * @param $responseJSON Formatted response object
-	 * @throws ChargeDesk_RequestError
+	 * @throws RequestError
 	 */
 	private function _apiError($status_code, $responseHeader, $responseBody, $responseJSON) {
 		$message = "There was an error talking to ChargeDesk";
