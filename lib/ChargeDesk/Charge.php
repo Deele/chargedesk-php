@@ -27,7 +27,7 @@ class Charge extends Resource
 
     /**
      * Retrieves an existing Resource
-     * @param $key Resource key to retrieve
+     * @param string $key Resource key to retrieve
      * @param string $api_key API key to use for this request
      * @return Resource Resource matching the provided $key
      * @throws ConnectError
@@ -40,7 +40,7 @@ class Charge extends Resource
     }
 
     /**
-     * @param $key Resource key to update
+     * @param string $key Resource key to update
      * @param array $data Fields to update an existing resource with
      * @param string $api_key API key to use for this request
      * @return Resource Resource with updated fields
@@ -69,7 +69,7 @@ class Charge extends Resource
 
     /**
      * Refund charge
-     * @param $key Resource key to update
+     * @param string $key Resource key to update
      * @param array $data Fields to update an existing resource with
      * @param string $api_key API key to use for this request
      * @return Resource Resource with updated fields
@@ -84,7 +84,7 @@ class Charge extends Resource
 
     /**
      * Send (or resend) email notification for this charge
-     * @param $key Resource key to update
+     * @param string $key Resource key to update
      * @param array $data Fields to update an existing resource with
      * @param string $api_key API key to use for this request
      * @return Resource Resource with updated fields
