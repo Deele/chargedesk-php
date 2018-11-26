@@ -60,7 +60,12 @@ class Request
     {
         $status_code = intval($curlInfo['http_code']);
         $responseJSON = json_decode($responseBody, false, 20);
-        if ($status_code < 200 || $status_code > 299 || $responseJSON === null || $responseJSON->error) {
+        if (
+            $status_code < 200 ||
+            $status_code > 299 ||
+            is_null($responseJSON) ||
+            property_exists($responseJSON, 'error')
+        ) {
             $this->_apiError($status_code, $responseHeader, $responseBody, $responseJSON);
         }
         return $responseJSON;
@@ -189,10 +194,10 @@ class Request
         $message = "There was an error talking to ChargeDesk";
         $incorrectParameter = false;
         if ($responseJSON && $responseJSON->error) {
-            if ($responseJSON->error->message) {
+            if (property_exists($responseJSON->error, 'message')) {
                 $message = $responseJSON->error->message;
             }
-            if ($responseJSON->error->incorrect_parameter) {
+            if (property_exists($responseJSON->error, 'incorrect_parameter')) {
                 $incorrectParameter = $responseJSON->error->incorrect_parameter;
             }
         }
