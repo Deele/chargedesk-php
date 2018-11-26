@@ -69,7 +69,7 @@ class Resource
      */
     public static function _buildPath($class, $key = false)
     {
-        $path = str_ireplace("ChargeDesk_", "", $class);
+        $path = str_ireplace(array('ChargeDesk_', 'ChargeDesk\\'), "", $class);
         if ($key && !is_array($key)) {
             $key = array($key);
         }

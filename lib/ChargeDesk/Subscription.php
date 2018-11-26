@@ -26,7 +26,7 @@ class Subscription extends Resource
 
     /**
      * Retrieves an existing Resource
-     * @param $key Resource key to retrieve
+     * @param string $key Resource key to retrieve
      * @param string $api_key API key to use for this request
      * @return Resource Resource matching the provided $key
      * @throws ConnectError
@@ -39,7 +39,7 @@ class Subscription extends Resource
     }
 
     /**
-     * @param $key Resource key to update
+     * @param string $key Resource key to update
      * @param array $data Fields to update an existing resource with
      * @param string $api_key API key to use for this request
      * @return Resource Resource with updated fields
@@ -68,7 +68,7 @@ class Subscription extends Resource
 
     /**
      * Cancel subscription
-     * @param $key Resource key to update
+     * @param string $key Resource key to update
      * @param array $data Fields to update an existing resource with
      * @param string $api_key API key to use for this request
      * @return Resource Resource with updated fields
