@@ -96,6 +96,20 @@ class Charge extends Resource
     {
         return self::_post(get_class(), array($key, "email"), $data, $api_key);
     }
+
+    /**
+     * Preview the subtotal, any tax rates and the final total amount for a charge or product.
+     * @param array $data Fields to calculate preview from
+     * @param string $api_key API key to use for this request
+     * @return Resource Resource with updated fields
+     * @throws ConnectError
+     * @throws RateLimitError
+     * @throws RequestError
+     */
+    public static function preview($data = array(), $api_key = null)
+    {
+        return self::_request(get_class(), "get", self::_buildPath(get_class(), 'preview'), $data, $api_key);
+    }
 }
 
 class_alias('ChargeDesk\Charge', 'ChargeDesk_Charge');
